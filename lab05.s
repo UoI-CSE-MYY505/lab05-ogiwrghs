@@ -67,6 +67,11 @@ taken:
 # ----------------------------------------------------------------------------------------
 # TODO: Add an example where an instruction passes its result to the 2nd following instruction
 # There should be no stalls
+
+    add  t0, s1, s2        # t0 = s1 + s2
+    add  t1, s3, s4        # Independent instruction (does not cause a stall)
+    add  t2, t0, s5        # t2 = t0 + s5, t0 should be correctly forwarded
+    
 # ----------------------------------------------------------------------------------------
     # nop instructions added between examples
     add  zero, zero, zero  
@@ -78,6 +83,12 @@ taken:
 # A double hazzard is when the source register of an instruction matches the destination
 #  registers of both of the two instructions preceeding it. It should get the newest value.
 # There should be no stalls
+    
+    addi t0, zero, 5     # t0 = 5
+    addi t0, t0, 3       # t0 = t0 + 3 = 8
+    add  t1, t0, zero    # t1 = t0 (p??pe? ?a e??a? 8)
+
+    
 # ----------------------------------------------------------------------------------------
     # nop instructions added between examples
     add  zero, zero, zero  
